@@ -1,0 +1,28 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  // GitHub Pages (legacy) の Jekyll サイト。master ブランチ直push、CI無し。
+  // 依存更新は Renovate Bot が広め、自動マージする。
+  extends: [
+    "config:recommended",
+    ":dependencyDashboard"
+  ],
+  // 全更新を自動マージする
+  automerge: true,
+  automergeType: "pr",
+  platformAutomerge: true,
+  labels: ["renovate", "dependencies"],
+  // 更新頻度を上げる（サイト程度なら日次で十分）
+  schedule: ["after 10pm and before 5am every day"],
+  timezone: "Asia/Tokyo",
+  // ルビー/Bundler の依存を対象に含める
+  enabledManagers: ["bundler"],
+  // github-pages gem は GitHub 側がページビルド用に管理するため、
+  // Renovate が直接上げても GitHub Pages ビルドには反映されず意味がない。
+  // よって対象から外す。
+  packageRules: [
+    {
+      matchPackageNames: ["github-pages"],
+      enabled: false
+    }
+  ]
+}
